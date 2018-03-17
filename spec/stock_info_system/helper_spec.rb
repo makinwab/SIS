@@ -12,7 +12,6 @@ RSpec.describe StockInfoSystem::Helper do
 
     context "when an invalid input is entered" do
       it "is pending" do
-        
       end
     end
   end

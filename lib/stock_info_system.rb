@@ -19,10 +19,3 @@ module StockInfoSystem
     end
   end
 end
-
-# begin
-#   StockInfoSystem::Engine.new.start
-# rescue
-#   print "Invalid input format\n"
-#   StockInfoSystem::Engine.new.start
-# end
