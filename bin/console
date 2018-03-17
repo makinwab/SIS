@@ -12,4 +12,5 @@ require 'stock_info_system'
 # Pry.start
 
 require 'irb'
-IRB.start(__FILE__)
+# IRB.start(__FILE__)
+StockInfoSystem::Engine.new.start
