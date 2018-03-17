@@ -1,11 +1,15 @@
 # frozen_string_literal: true
 
 RSpec.describe StockInfoSystem do
+
+  subject { StockInfoSystem::Engine.new }
   it 'has a version number' do
     expect(StockInfoSystem::VERSION).not_to be nil
   end
 
-  it 'does something useful' do
-    expect(false).to eq(true)
+  describe '#start' do
+    it "returns an instance of StockInfoSystem::Client" do
+      expect(subject.start).to be_an_instance_of StockInfoSystem::Client
+    end
   end
 end
