@@ -2,6 +2,7 @@
 
 require 'bundler/setup'
 require 'stock_info_system'
+require 'fixture'
 
 RSpec.configure do |config|
   # Enable flags like --only-failures and --next-failure
