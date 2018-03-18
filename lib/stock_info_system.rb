@@ -12,18 +12,37 @@ require 'stock_info_system/version'
 # StockInfoSystem::Engine kickstarts the application
 module StockInfoSystem
   class Engine
+    def initialize
+      @ui = StockInfoSystem::UI
+      @helper = StockInfoSystem::Helper
+    end
+
     def start
-      StockInfoSystem::UI.display_start_message
+      @ui.display_start_message
 
       begin
         client = StockInfoSystem::Client.new(
-          StockInfoSystem::Helper.user_input
+          @helper.user_input
         )
 
-        client.get_stock_data
+        # display stock info
+        client_stock_info client
 
       rescue StandardError
         raise
+      end
+    end
+
+    private
+
+    def client_stock_info(client)
+      client.get_stock_data.each do |stock_info|
+        @ui.display_stock_info_output(
+          @helper.parse_date(stock_info['Date']),
+          stock_info['Close'],
+          stock_info['Low'],
+          stock_info['High']
+        )
       end
     end
   end
