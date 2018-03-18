@@ -14,21 +14,23 @@ module StockInfoSystem
       )
 
       @helper = StockInfoSystem::Helper
-
-      display_output
+      @ui = StockInfoSystem::UI
     end
 
-    def display_output
-      print "\nOutput:\n"
+    def get_stock_data
+      @ui.display_output_label "Output"
 
       @dataset['data'].sort!.length.times do |index|
         stock_info = @helper.get_hash_from_column_data(
           @dataset['column_names'].zip(@dataset['data'][index])
         )
 
-        print "#{@helper.parse_date stock_info['Date']}:" \
-              " Closed at #{stock_info['Close']} "\
-              "(#{stock_info['Low']} ~ #{stock_info['High']}) \n"
+        @ui.display_stock_info_output(
+          @helper.parse_date(stock_info['Date']),
+          stock_info['Close'],
+          stock_info['Low'],
+          stock_info['High']
+        )
       end
     end
   end
