@@ -8,10 +8,11 @@ RSpec.describe StockInfoSystem do
   end
 
   describe '#start' do
-    it 'returns an instance of StockInfoSystem::Client' do
+    it 'prints output to the console' do
       allow(StockInfoSystem::Helper).to receive(:gets).and_return(Fixture::USER_INPUT)
+      expect(subject).to receive(:start).and_return('output')
 
-      expect(subject.start).to be_an_instance_of StockInfoSystem::Client
+      subject.start
     end
   end
 end

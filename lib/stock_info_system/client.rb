@@ -18,7 +18,7 @@ module StockInfoSystem
 
     def get_stock_data
       stock_info = []
-
+      
       @dataset['data'].sort!.length.times do |index|
         stock_info << @helper.get_hash_from_column_data(
           @dataset['column_names'].zip(@dataset['data'][index])
