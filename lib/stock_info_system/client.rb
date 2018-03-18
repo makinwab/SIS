@@ -16,9 +16,9 @@ module StockInfoSystem
       @helper = StockInfoSystem::Helper
     end
 
-    def get_stock_data
+    def stock_data
       stock_info = []
-      
+
       @dataset['data'].sort!.length.times do |index|
         stock_info << @helper.get_hash_from_column_data(
           @dataset['column_names'].zip(@dataset['data'][index])
@@ -26,6 +26,22 @@ module StockInfoSystem
       end
 
       stock_info
+    end
+
+    def stock_return_data
+      initial_value = dataset['data'][0][4]
+      final_value = dataset['data'][-1][4]
+      value_difference = final_value - initial_value
+      percent_return = (value_difference / initial_value) * 100
+
+      [
+        value_difference,
+        percent_return.round(1),
+        initial_value,
+        final_value,
+        dataset['data'][0][0],
+        dataset['data'][-1][0]
+      ]
     end
   end
 end

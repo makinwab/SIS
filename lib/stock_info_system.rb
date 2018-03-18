@@ -8,7 +8,6 @@ require 'stock_info_system/helper'
 require 'stock_info_system/ui'
 require 'stock_info_system/version'
 
-
 # StockInfoSystem::Engine kickstarts the application
 module StockInfoSystem
   class Engine
@@ -28,6 +27,10 @@ module StockInfoSystem
         # display stock info
         client_stock_info client
 
+        # display stock return
+        @ui.display_return_output(
+          *client.stock_return_data
+        )
       rescue StandardError
         raise
       end
@@ -36,7 +39,7 @@ module StockInfoSystem
     private
 
     def client_stock_info(client)
-      client.get_stock_data.each do |stock_info|
+      client.stock_data.each do |stock_info|
         @ui.display_stock_info_output(
           @helper.parse_date(stock_info['Date']),
           stock_info['Close'],

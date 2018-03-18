@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
-require 'net/http'
 require 'json'
+require 'net/http'
 
 # Make API calls
 module StockInfoSystem

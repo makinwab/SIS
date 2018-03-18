@@ -9,16 +9,16 @@ RSpec.describe StockInfoSystem::Client do
     )
   end
 
-  it "makes available dataset" do
+  it 'makes available dataset' do
     expect(subject).to respond_to(:dataset)
   end
 
-  describe "#get_stock_data" do
-    it "returns stock info" do
-      result = subject.get_stock_data
+  describe '#stock_data' do
+    it 'returns stock info' do
+      result = subject.stock_data
 
-      expect(result[0]["Date"]).to eq Fixture::ZIPPED_DATASET["Date"]
-      expect(result[0]["Close"]).to eq Fixture::ZIPPED_DATASET["Close"]
+      expect(result[0]['Date']).to eq Fixture::ZIPPED_DATASET['Date']
+      expect(result[0]['Close']).to eq Fixture::ZIPPED_DATASET['Close']
     end
   end
 end

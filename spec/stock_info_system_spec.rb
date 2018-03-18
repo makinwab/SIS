@@ -9,9 +9,11 @@ RSpec.describe StockInfoSystem do
 
   describe '#start' do
     it 'prints output to the console' do
-      allow(StockInfoSystem::Helper).to receive(:gets).and_return(Fixture::USER_INPUT)
-      expect(subject).to receive(:start).and_return('output')
+      allow(StockInfoSystem::Helper).to receive(:gets).and_return(
+        Fixture::USER_INPUT
+      )
 
+      expect(subject).to receive(:start).and_return('output')
       subject.start
     end
   end
