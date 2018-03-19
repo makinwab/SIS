@@ -30,4 +30,20 @@ RSpec.describe StockInfoSystem::Client do
       expect(result).to match_array Fixture::RETURN_INFO
     end
   end
+
+  describe '#stock_drawdowns' do
+    it 'returns the stock drawdowns' do
+      result = subject.stock_drawdowns
+
+      expect(result).to match_array Fixture::DRAWDOWN
+    end
+  end
+
+  describe '#stock_max_drawdown' do
+    it 'returns the max drawdown' do
+      result = subject.stock_max_drawdown
+
+      expect(result).to match_array Fixture::DRAWDOWN.reverse[-1]
+    end
+  end
 end

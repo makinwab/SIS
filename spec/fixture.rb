@@ -55,4 +55,6 @@ module Fixture
     DATASET['data'][0][4],
     [DATASET['data'][0][0], DATASET['data'][0][0]]
   ].freeze
+
+  DRAWDOWN = [[1.8, '2018-01-02', 172.3, 169.26]].freeze
 end

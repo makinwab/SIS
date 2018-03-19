@@ -57,14 +57,14 @@ module StockInfoSystem
 
     def client_stock_drawdowns
       drawdowns = @client.stock_drawdowns
-      start = drawdowns.length - 3
+      start = drawdowns.length > 3 ? drawdowns.length - 3 : 0
 
       drawdowns[start..-1].reverse.each do |value|
         @ui.display_drawdowns(
           value[0],
           value[2],
           value[3],
-          @helper.parse_date(value[1])
+          value[1]
         )
       end
     end

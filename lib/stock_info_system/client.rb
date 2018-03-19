@@ -55,7 +55,7 @@ module StockInfoSystem
         drawdowns[-1][0],
         drawdowns[-1][2],
         drawdowns[-1][3],
-        @helper.parse_date(drawdowns[-1][1])
+        drawdowns[-1][1]
       ]
     end
 
