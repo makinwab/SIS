@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module StockInfoSystem
-  # Process Input and Display Output
+  # Process Input
   class Client
     attr_reader :dataset
 

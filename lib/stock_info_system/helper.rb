@@ -23,6 +23,8 @@ module StockInfoSystem
 
       def parse_input(input)
         parsed_input = {}
+
+        input = check_url_option(input)
         parsed_input[:api_key] = input[0]
         parsed_input[:stock_symbol] = input[1]
         date = input[2..-1].join(' ').split('-')
@@ -30,6 +32,15 @@ module StockInfoSystem
         parsed_input[:end_date] = date.length > 1 ? date[1].strip : ''
 
         parsed_input
+      end
+
+      def check_url_option(input)
+        if input[-2] == '-a'
+          StockInfoSystem::API.api_url = input[-1]
+          return input[0...-2]
+        end
+
+        input
       end
     end
   end
