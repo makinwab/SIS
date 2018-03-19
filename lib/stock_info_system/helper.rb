@@ -3,6 +3,7 @@
 require 'date'
 
 module StockInfoSystem
+  # functions for reuse across the application
   module Helper
     def self.user_input
       input = gets.chomp.split(' ')

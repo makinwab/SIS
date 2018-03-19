@@ -14,11 +14,20 @@ RSpec.describe StockInfoSystem::Client do
   end
 
   describe '#stock_data' do
-    it 'returns stock info' do
+    it 'returns general stock info' do
       result = subject.stock_data
 
       expect(result[0]['Date']).to eq Fixture::ZIPPED_DATASET['Date']
       expect(result[0]['Close']).to eq Fixture::ZIPPED_DATASET['Close']
+    end
+  end
+
+  describe '#stock_return_data' do
+    it 'returns stock return information in a period' do
+      result = subject.stock_return_data
+
+      expect(result).not_to be_empty
+      expect(result).to match_array Fixture::RETURN_INFO
     end
   end
 end

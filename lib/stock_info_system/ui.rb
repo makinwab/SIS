@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
-# Handles print outs
 module StockInfoSystem
+  # Handles print outs
   module UI
     def self.display_start_message
       print "Get Return on Stock and Drawdowns \n"
@@ -24,12 +24,11 @@ module StockInfoSystem
       percent_return,
       initial_value,
       final_value,
-      start_date,
-      end_date
+      date
     )
       print "\nReturn: #{value_difference} [+#{percent_return}%]"\
-        " (#{initial_value} on #{start_date} -> #{final_value} on"\
-        " #{end_date})\n"
+        " (#{initial_value} on #{date[0]} -> #{final_value} on"\
+        " #{date[1]})\n"
     end
 
     def display_drawdown_output; end

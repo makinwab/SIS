@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
-# Process Input and Display Output
 module StockInfoSystem
+  # Process Input and Display Output
   class Client
     attr_reader :dataset
 
@@ -31,17 +31,30 @@ module StockInfoSystem
     def stock_return_data
       initial_value = dataset['data'][0][4]
       final_value = dataset['data'][-1][4]
-      value_difference = final_value - initial_value
-      percent_return = (value_difference / initial_value) * 100
 
       [
-        value_difference,
-        percent_return.round(1),
+        value_difference(final_value, initial_value),
+        percent_return(final_value, initial_value).round(1),
         initial_value,
         final_value,
-        dataset['data'][0][0],
-        dataset['data'][-1][0]
+        return_period
       ]
+    end
+
+    private
+
+    def value_difference(final_value, initial_value)
+      final_value - initial_value
+    end
+
+    def percent_return(final_value, initial_value)
+      difference = value_difference(final_value, initial_value)
+
+      (difference / initial_value) * 100
+    end
+
+    def return_period
+      [dataset['data'][0][0], dataset['data'][-1][0]]
     end
   end
 end

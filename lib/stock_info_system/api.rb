@@ -3,8 +3,8 @@
 require 'json'
 require 'net/http'
 
-# Make API calls
 module StockInfoSystem
+  # Make API calls
   module API
     API_URL = 'https://www.quandl.com/api/v3/datasets/WIKI'.freeze
 

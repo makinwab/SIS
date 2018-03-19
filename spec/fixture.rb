@@ -47,4 +47,12 @@ module Fixture
     'Ex-Dividend' => 0.0,
     'Split Ratio' => 1.0
   }.freeze
+
+  RETURN_INFO = [
+    0.0,
+    0.0,
+    DATASET['data'][0][4],
+    DATASET['data'][0][4],
+    [DATASET['data'][0][0], DATASET['data'][0][0]]
+  ].freeze
 end

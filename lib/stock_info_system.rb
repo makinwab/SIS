@@ -8,8 +8,8 @@ require 'stock_info_system/helper'
 require 'stock_info_system/ui'
 require 'stock_info_system/version'
 
-# StockInfoSystem::Engine kickstarts the application
 module StockInfoSystem
+  # Kickstart the application
   class Engine
     def initialize
       @ui = StockInfoSystem::UI
@@ -19,21 +19,17 @@ module StockInfoSystem
     def start
       @ui.display_start_message
 
-      begin
-        client = StockInfoSystem::Client.new(
-          @helper.user_input
-        )
+      client = StockInfoSystem::Client.new(
+        @helper.user_input
+      )
 
-        # display stock info
-        client_stock_info client
+      # display stock info
+      client_stock_info client
 
-        # display stock return
-        @ui.display_return_output(
-          *client.stock_return_data
-        )
-      rescue StandardError
-        raise
-      end
+      # display stock return
+      @ui.display_return_output(
+        *client.stock_return_data
+      )
     end
 
     private
