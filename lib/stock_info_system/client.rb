@@ -41,6 +41,24 @@ module StockInfoSystem
       ]
     end
 
+    def stock_drawdowns
+      dataset['data'].map do |value|
+        drawdown = (((value[2] - value[3]) / value[2]) * 100).round(1)
+        [drawdown, value[0], value[2], value[3]]
+      end.sort!
+    end
+
+    def stock_max_drawdown
+      drawdowns = stock_drawdowns
+
+      [
+        drawdowns[-1][0],
+        drawdowns[-1][2],
+        drawdowns[-1][3],
+        @helper.parse_date(drawdowns[-1][1])
+      ]
+    end
+
     private
 
     def value_difference(final_value, initial_value)

@@ -15,11 +15,11 @@ module StockInfoSystem
       print "\n#{label}:\n"
     end
 
-    def self.display_stock_info_output(date, close, low, high)
+    def self.display_stock_info(date, close, low, high)
       print "#{date}: Closed at #{close} (#{low} ~ #{high}) \n"
     end
 
-    def self.display_return_output(
+    def self.display_return(
       value_difference,
       percent_return,
       initial_value,
@@ -31,8 +31,13 @@ module StockInfoSystem
         " #{date[1]})\n"
     end
 
-    def display_drawdown_output; end
+    def self.display_drawdowns(drawdown, high, low, date)
+      print "-#{drawdown}% (#{high} on #{date} -> #{low} on #{date}) \n"
+    end
 
-    def display_max_drawdown_output; end
+    def self.display_max_drawdown(drawdown, high, low, date)
+      print "\nMaximum drawdown: -#{drawdown}% "\
+        "(#{high} on #{date} -> #{low} on #{date})\n"
+    end
   end
 end
