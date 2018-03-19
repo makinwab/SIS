@@ -5,6 +5,8 @@ require 'date'
 module StockInfoSystem
   # functions for reuse across the application
   module Helper
+    VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-]+(\.[a-z\d\-]+)*\.[a-z]+\z/i
+
     def self.user_input
       input = gets.chomp.split(' ')
       parse_input input

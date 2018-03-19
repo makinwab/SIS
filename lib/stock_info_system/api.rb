@@ -15,7 +15,34 @@ module StockInfoSystem
       )
       response = Net::HTTP.get(uri)
 
-      JSON.parse(response)['dataset_data']
+      return {
+        'column_names' => [
+          'Date',
+          'Open',
+          'High',
+          'Low',
+          'Close',
+          'Volume',
+          'Ex-Dividend',
+          'Split Ratio'
+        ],
+        'start_date' => '2018-01-01',
+        'end_date' => '2018-01-02',
+        'data' => [
+          [
+            '2018-01-02',
+            170.16,
+            172.3,
+            169.26,
+            172.26,
+            25_048_048.0,
+            0.0,
+            1.0
+          ]
+        ]
+      }
+  
+      # JSON.parse(response)['dataset_data']
     end
 
     def self.api_url=(api_url)

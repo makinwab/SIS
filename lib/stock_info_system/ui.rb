@@ -39,5 +39,18 @@ module StockInfoSystem
       print "\nMaximum drawdown: -#{drawdown}% "\
         "(#{high} on #{date} -> #{low} on #{date})\n"
     end
+
+    def self.display_output_option_message
+      print "Send output to mail box? Yes? Enter email address, No? Type exit \n"
+      print ">>"      
+    end
+
+    def self.display_success_message
+      print "Success!!! Bye!\n"
+    end
+
+    def self.display_exit_message
+      print ":'( Exiting application...\n"
+    end
   end
 end

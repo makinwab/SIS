@@ -5,13 +5,18 @@ require 'pry'
 require 'stock_info_system/api'
 require 'stock_info_system/client'
 require 'stock_info_system/helper'
+require 'stock_info_system/output_adapter'
 require 'stock_info_system/ui'
 require 'stock_info_system/version'
 
 module StockInfoSystem
   # Kickstart the application
   class Engine
+    attr_accessor :results
+
     def initialize
+      @results = {}
+  
       @ui = StockInfoSystem::UI
       @helper = StockInfoSystem::Helper
 
@@ -32,25 +37,50 @@ module StockInfoSystem
       client_stock_drawdowns
 
       # display max drawdown
+      @results[:max_drawdown] = @client.stock_max_drawdown
       @ui.display_max_drawdown(
-        *@client.stock_max_drawdown
+        *@results[:max_drawdown]
       )
 
       # display stock return
+      @results[:stock_return] = @client.stock_return_data
       @ui.display_return(
-        *@client.stock_return_data
+        *@results[:stock_return]
       )
+
+      delivery_option
     end
 
     private
 
+    def delivery_option
+      if results
+        @ui.display_output_option_message
+        user_input = gets.chomp
+        if user_input =~ @helper::VALID_EMAIL_REGEX
+          StockInfoSystem::OutputAdapter.send_output(
+            @results, user_input
+          )
+
+          @ui.display_success_message
+        else
+          @ui.display_exit_message
+          abort
+        end
+      end
+    end
+
     def client_stock_info
       @client.stock_data.each do |stock_info|
-        @ui.display_stock_info(
+        @results[:info] = [
           @helper.parse_date(stock_info['Date']),
           stock_info['Close'],
           stock_info['Low'],
           stock_info['High']
+        ]
+
+        @ui.display_stock_info(
+          *@results[:info]
         )
       end
     end
@@ -58,13 +88,20 @@ module StockInfoSystem
     def client_stock_drawdowns
       drawdowns = @client.stock_drawdowns
       start = drawdowns.length > 3 ? drawdowns.length - 3 : 0
+      @results[:drawdowns] = []
 
       drawdowns[start..-1].reverse.each do |value|
+        @results[:drawdowns].push(
+          [
+            value[0],
+            value[2],
+            value[3],
+            value[1]
+          ]
+        )
+
         @ui.display_drawdowns(
-          value[0],
-          value[2],
-          value[3],
-          value[1]
+          *@results[:drawdowns][-1]
         )
       end
     end
