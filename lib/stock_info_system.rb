@@ -37,36 +37,44 @@ module StockInfoSystem
       client_stock_drawdowns
 
       # display max drawdown
-      @results[:max_drawdown] = @client.stock_max_drawdown
-      @ui.display_max_drawdown(
-        *@results[:max_drawdown]
-      )
+      client_stock_max_drawdown
 
       # display stock return
-      @results[:stock_return] = @client.stock_return_data
-      @ui.display_return(
-        *@results[:stock_return]
-      )
+      client_stock_return
 
-      delivery_option
+      delivery_option unless results
+      abort
     end
 
     private
 
     def delivery_option
-      return unless results
-
       @ui.display_output_option_message
+
       user_input = gets.chomp
+
       if user_input =~ @helper::VALID_EMAIL_REGEX
-        StockInfoSystem::OutputAdapter.send_output(
-          @results, user_input
-        )
+        StockInfoSystem::OutputAdapter
+          .send_output(@results, user_input)
+
         @ui.display_success_message
       else
         @ui.display_exit_message
-        abort
       end
+    end
+
+    def client_stock_max_drawdown
+      @results[:max_drawdown] = @client.stock_max_drawdown
+      @ui.display_max_drawdown(
+        *@results[:max_drawdown]
+      )
+    end
+
+    def client_stock_return
+      @results[:stock_return] = @client.stock_return_data
+      @ui.display_return(
+        *@results[:stock_return]
+      )
     end
 
     def client_stock_info
@@ -74,36 +82,30 @@ module StockInfoSystem
       @client.stock_data.each do |stock_info|
         info = [
           @helper.parse_date(stock_info['Date']),
-          stock_info['Close'],
-          stock_info['Low'],
+          stock_info['Close'], stock_info['Low'],
           stock_info['High']
         ]
 
-        @results[:stock_info].push(info)
-        @ui.display_stock_info(
-          *info
-        )
+        @results[:stock_info].push info
+        @ui.display_stock_info(*info)
       end
     end
 
     def client_stock_drawdowns
       drawdowns = @client.stock_drawdowns
-      start = drawdowns.length > 3 ? drawdowns.length - 3 : 0
+      start = start(drawdowns)
       @results[:drawdowns] = []
 
       drawdowns[start..-1].reverse.each do |value|
         @results[:drawdowns].push(
-          [
-            value[0],
-            value[2],
-            value[3],
-            value[1]
-          ]
+          [value[0], value[2], value[3], value[1]]
         )
-        @ui.display_drawdowns(
-          *@results[:drawdowns][-1]
-        )
+        @ui.display_drawdowns(*@results[:drawdowns][-1])
       end
+    end
+
+    def index(drawdowns)
+      drawdowns.length > 3 ? drawdowns.length - 3 : 0
     end
   end
 end

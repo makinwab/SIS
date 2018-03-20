@@ -11,8 +11,8 @@ module StockInfoSystem
       @ui = StockInfoSystem::UI
       @helper = StockInfoSystem::Helper
 
-      def send(data, user)
-        connection
+      def send(_data, user)
+        setup_mailer
 
         Mail.deliver do
           from     ENV['USER_EMAIL']
@@ -25,7 +25,7 @@ module StockInfoSystem
         end
       end
 
-      def connection
+      def setup_mailer
         options = {
           address: 'smtp.gmail.com',
           port: 587,
@@ -35,13 +35,11 @@ module StockInfoSystem
           enable_starttls_auto: true
         }
 
-        Mail.defaults do
-          delivery_method :smtp, options
-        end
+        Mail.defaults { delivery_method :smtp, options }
       end
 
       def message
-        message = <<MESSAGE
+        "
           <center>
             <h1>Stock Information</h1>
           </center>
@@ -49,10 +47,9 @@ module StockInfoSystem
           #{prepare_stock_output data[:stock_info]}
           <h2>First 3 Drawdowns:</h2>
           #{prepare_drawdowns_output data[:drawdowns]}
-
           #{prepare_max_drawdown_output data[:max_drawdown]}
           #{prepare_return_output data[:stock_return]}
-MESSAGE
+          "
       end
 
       def prepare_stock_output(data)
