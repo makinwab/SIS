@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
-require 'pry'
+require 'dotenv'
+Dotenv.load
 
 require 'stock_info_system/api'
 require 'stock_info_system/client'
@@ -16,7 +17,7 @@ module StockInfoSystem
 
     def initialize
       @results = {}
-  
+
       @ui = StockInfoSystem::UI
       @helper = StockInfoSystem::Helper
 
@@ -54,33 +55,35 @@ module StockInfoSystem
     private
 
     def delivery_option
-      if results
-        @ui.display_output_option_message
-        user_input = gets.chomp
-        if user_input =~ @helper::VALID_EMAIL_REGEX
-          StockInfoSystem::OutputAdapter.send_output(
-            @results, user_input
-          )
+      return unless results
 
-          @ui.display_success_message
-        else
-          @ui.display_exit_message
-          abort
-        end
+      @ui.display_output_option_message
+      user_input = gets.chomp
+      if user_input =~ @helper::VALID_EMAIL_REGEX
+        StockInfoSystem::OutputAdapter.send_output(
+          @results, user_input
+        )
+
+        @ui.display_success_message
+      else
+        @ui.display_exit_message
+        abort
       end
     end
 
     def client_stock_info
+      @results[:stock_info] = []
       @client.stock_data.each do |stock_info|
-        @results[:info] = [
+        info = [
           @helper.parse_date(stock_info['Date']),
           stock_info['Close'],
           stock_info['Low'],
           stock_info['High']
         ]
+        @results[:stock_info].push(info)
 
         @ui.display_stock_info(
-          *@results[:info]
+          *info
         )
       end
     end

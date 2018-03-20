@@ -3,6 +3,31 @@
 module StockInfoSystem
   # Handles print outs
   module UI
+    def self.output_message(date, close, low, high)
+      "#{date}: Closed at #{close} (#{low} ~ #{high})"
+    end
+
+    def self.drawdowns_message(drawdown, high, low, date)
+      "-#{drawdown}% (#{high} on #{date} -> #{low} on #{date})"
+    end
+
+    def self.max_drawdown_message(drawdown, high, low, date)
+      "Maximum drawdown: -#{drawdown}% "\
+        "(#{high} on #{date} -> #{low} on #{date})"
+    end
+
+    def self.return_message(
+      value_difference,
+      percent_return,
+      initial_value,
+      final_value,
+      date
+    )
+      "Return: #{value_difference} [+#{percent_return}%]"\
+        " (#{initial_value} on #{date[0]} -> #{final_value} on"\
+        " #{date[1]})"
+    end
+
     def self.display_start_message
       print "Get Return on Stock and Drawdowns \n"
       print 'Provide input in this format' \
@@ -16,7 +41,7 @@ module StockInfoSystem
     end
 
     def self.display_stock_info(date, close, low, high)
-      print "#{date}: Closed at #{close} (#{low} ~ #{high}) \n"
+      print output_message(date, close, low, high) + "\n"
     end
 
     def self.display_return(
@@ -26,23 +51,26 @@ module StockInfoSystem
       final_value,
       date
     )
-      print "\nReturn: #{value_difference} [+#{percent_return}%]"\
-        " (#{initial_value} on #{date[0]} -> #{final_value} on"\
-        " #{date[1]})\n"
+      print "\n" + return_message(
+        value_difference,
+        percent_return,
+        initial_value,
+        final_value,
+        date
+      ) + "\n"
     end
 
     def self.display_drawdowns(drawdown, high, low, date)
-      print "-#{drawdown}% (#{high} on #{date} -> #{low} on #{date}) \n"
+      print drawdowns_message(drawdown, high, low, date) + "\n"
     end
 
     def self.display_max_drawdown(drawdown, high, low, date)
-      print "\nMaximum drawdown: -#{drawdown}% "\
-        "(#{high} on #{date} -> #{low} on #{date})\n"
+      print "\n" + max_drawdown_message(drawdown, high, low, date) + "\n"
     end
 
     def self.display_output_option_message
-      print "Send output to mail box? Yes? Enter email address, No? Type exit \n"
-      print ">>"      
+      print "Send output to mail box? Yes? Enter email address, No? Type exit\n"
+      print '>>'
     end
 
     def self.display_success_message
