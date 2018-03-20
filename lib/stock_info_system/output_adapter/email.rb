@@ -12,20 +12,20 @@ module StockInfoSystem
       @helper = StockInfoSystem::Helper
 
       def send(data, user)
-        message = <<MESSAGE
-          <center>
-          <h1>Stock Information</h1>
-          <h2>Output: </h2>
-          #{prepare_stock_output data[:stock_info]}
+        connection
 
-          <h2>First 3 Drawdowns:</h2>
-          #{prepare_drawdowns_output data[:drawdowns]}
+        Mail.deliver do
+          from     ENV['USER_EMAIL']
+          to       user
+          subject  'Stock Information'
+          html_part do
+            content_type 'text/html; charset=UTF-8'
+            body message
+          end
+        end
+      end
 
-          #{prepare_max_drawdown_output data[:max_drawdown]}
-          #{prepare_return_output data[:stock_return]}
-          </center>
-MESSAGE
-
+      def connection
         options = {
           address: 'smtp.gmail.com',
           port: 587,
@@ -38,16 +38,21 @@ MESSAGE
         Mail.defaults do
           delivery_method :smtp, options
         end
+      end
 
-        Mail.deliver do
-          from     'makinwa37@gmail.com'
-          to       user
-          subject  'Stock Information'
-          html_part do
-            content_type 'text/html; charset=UTF-8'
-            body message
-          end
-        end
+      def message
+        message = <<MESSAGE
+          <center>
+            <h1>Stock Information</h1>
+          </center>
+          <h2>Output: </h2>
+          #{prepare_stock_output data[:stock_info]}
+          <h2>First 3 Drawdowns:</h2>
+          #{prepare_drawdowns_output data[:drawdowns]}
+
+          #{prepare_max_drawdown_output data[:max_drawdown]}
+          #{prepare_return_output data[:stock_return]}
+MESSAGE
       end
 
       def prepare_stock_output(data)

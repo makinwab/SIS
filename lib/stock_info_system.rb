@@ -17,7 +17,6 @@ module StockInfoSystem
 
     def initialize
       @results = {}
-
       @ui = StockInfoSystem::UI
       @helper = StockInfoSystem::Helper
 
@@ -63,7 +62,6 @@ module StockInfoSystem
         StockInfoSystem::OutputAdapter.send_output(
           @results, user_input
         )
-
         @ui.display_success_message
       else
         @ui.display_exit_message
@@ -80,8 +78,8 @@ module StockInfoSystem
           stock_info['Low'],
           stock_info['High']
         ]
-        @results[:stock_info].push(info)
 
+        @results[:stock_info].push(info)
         @ui.display_stock_info(
           *info
         )
@@ -102,7 +100,6 @@ module StockInfoSystem
             value[1]
           ]
         )
-
         @ui.display_drawdowns(
           *@results[:drawdowns][-1]
         )
