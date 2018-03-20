@@ -2,31 +2,15 @@
 
 [![Build Status](https://semaphoreci.com/api/v1/makinwa37/sis/branches/master/badge.svg)](https://semaphoreci.com/makinwa37/sis)
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/stock_info_system`. To experiment with that code, run `bin/console` for an interactive prompt.
-
-TODO: Delete this and the text above, and describe your gem
-
-## Installation
-
-Add this line to your application's Gemfile:
-
-```ruby
-gem 'stock_info_system'
-```
-
-And then execute:
-
-    $ bundle
-
-Or install it yourself as:
-
-    $ gem install stock_info_system
-
 ## Usage
 
 ```ruby
 ruby -Ilib bin/console
 ```
+
+- Create a `.env` file based on `.env_sample`
+- Update USER_EMAIL and USER_PASSWORD
+- Make email account allow for less secure apps e.g. [Gmail](https://myaccount.google.com/lesssecureapps?rfn=27&rfnc=1&eid=3278497425963345540&et=0&asae=2&pli=1)
 
 ## Development
 
