@@ -93,7 +93,7 @@ module StockInfoSystem
 
     def client_stock_drawdowns
       drawdowns = @client.stock_drawdowns
-      start = start(drawdowns)
+      start = index(drawdowns)
       @results[:drawdowns] = []
 
       drawdowns[start..-1].reverse.each do |value|

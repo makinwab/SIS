@@ -32,7 +32,8 @@ module StockInfoSystem
       print "Get Return on Stock and Drawdowns \n"
       print 'Provide input in this format' \
         " [API_KEY=XXXX {Stock Symbol} {Date OR Start Date - End Date}] \n"
-
+      print 'To override the default API attach option -a and pass API URL' \
+        " [-a https://www.newapi.com/]\n"
       print '>>'
     end
 
@@ -79,6 +80,11 @@ module StockInfoSystem
 
     def self.display_exit_message
       print ":'( Exiting application...\n"
+    end
+
+    def self.display_error_message
+      print 'Oops! Something went wrong. Please check your input format' \
+        " or your API KEY (could be expired)\n"
     end
   end
 end

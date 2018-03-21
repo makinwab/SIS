@@ -13,4 +13,8 @@ require 'stock_info_system'
 
 require 'irb'
 # IRB.start(__FILE__)
-StockInfoSystem::Engine.new.start
+begin
+  StockInfoSystem::Engine.new.start
+rescue StandardError
+  StockInfoSystem::UI.display_error_message
+end
